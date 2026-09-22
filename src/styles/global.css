@@ -1,0 +1,354 @@
+@import './tokens.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
+
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.app-header p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.app-main {
+  flex: 1;
+  padding: 24px 28px 60px;
+}
+
+.add-tile-button {
+  border: none;
+  background: var(--color-accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.add-tile-button:hover {
+  filter: brightness(1.08);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-auto-rows: 130px;
+  grid-auto-flow: dense;
+  gap: 14px;
+}
+
+.board-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 80px 0;
+  color: var(--color-text-muted);
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--tile-radius);
+  box-shadow: var(--shadow-tile);
+  padding: 14px;
+  cursor: grab;
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.tile:hover {
+  box-shadow: var(--shadow-tile-hover);
+}
+
+.tile--dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.tile--group-target {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.tile--small .tile-text {
+  font-size: 13px;
+  -webkit-line-clamp: 3;
+}
+
+.tile--medium .tile-text {
+  font-size: 14px;
+  -webkit-line-clamp: 5;
+}
+
+.tile--large .tile-text {
+  font-size: 16px;
+  -webkit-line-clamp: 9;
+}
+
+.tile--xlarge .tile-text {
+  font-size: 19px;
+  -webkit-line-clamp: 14;
+}
+
+.tile-controls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.tile:hover .tile-controls,
+.tile:focus-within .tile-controls {
+  opacity: 1;
+}
+
+.icon-button {
+  border: none;
+  background: var(--color-surface-alt);
+  color: var(--color-text-muted);
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  font-size: 12px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.tile-text {
+  flex: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+  cursor: text;
+  padding-right: 4px;
+}
+
+.tile-text-placeholder {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+textarea.tile-text--editing {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  outline: none;
+}
+
+.resize-handle {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: nwse-resize;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.tile:hover .resize-handle,
+.tile:focus-within .resize-handle {
+  opacity: 1;
+}
+
+.group-tile {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  background: linear-gradient(160deg, var(--color-surface), var(--color-surface-alt));
+}
+
+.group-tile-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.group-tile-icon {
+  font-size: 22px;
+}
+
+.group-tile-name {
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.group-tile-count {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 20, 30, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 100;
+}
+
+.modal-content {
+  background: var(--color-surface);
+  border-radius: 16px;
+  width: min(520px, 100%);
+  max-height: min(640px, 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: var(--shadow-tile-hover);
+}
+
+.group-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.group-modal-name-input {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: inherit;
+  outline: none;
+  border-bottom: 1px solid transparent;
+}
+
+.group-modal-name-input:focus {
+  border-bottom-color: var(--color-accent);
+}
+
+.group-member-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.group-member-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-surface-alt);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: grab;
+}
+
+.group-member-text-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+
+.group-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 14px;
+}
+
+.text-button {
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.text-button:hover {
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+}
+
+.text-button--danger:hover {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
