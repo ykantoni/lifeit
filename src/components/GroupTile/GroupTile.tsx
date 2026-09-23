@@ -4,6 +4,7 @@ import type { Group } from '../../types/tile';
 import { useBoardStore } from '../../state/boardStore';
 import { useTileEffectiveTier } from '../../hooks/useTileEffectiveTier';
 import { tierSpan } from '../../utils/sizeTiers';
+import { getGroupColors } from '../../utils/groupColor';
 import { ResizeHandle } from '../Tile/ResizeHandle';
 import { IconButton } from '../common/IconButton';
 
@@ -33,6 +34,7 @@ export function GroupTile({
   const clearManualTier = useBoardStore((s) => s.clearManualTier);
   const tier = useTileEffectiveTier(group);
   const span = tierSpan(tier);
+  const colors = getGroupColors(group.id);
 
   const classNames = [
     'tile',
@@ -47,7 +49,16 @@ export function GroupTile({
   return (
     <div
       ref={setNodeRef}
-      style={{ ...style, gridColumn: `span ${span.col}`, gridRow: `span ${span.row}` }}
+      style={
+        {
+          ...style,
+          gridColumn: `span ${span.col}`,
+          gridRow: `span ${span.row}`,
+          background: colors.background,
+          '--group-text': colors.text,
+          '--group-text-muted': colors.textMuted,
+        } as CSSProperties
+      }
       className={classNames}
       {...dragAttributes}
       {...dragListeners}
