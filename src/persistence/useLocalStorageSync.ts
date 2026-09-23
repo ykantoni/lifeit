@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useBoardStore } from '../state/boardStore';
+import { SAVE_DEBOUNCE_MS } from './constants';
 import { loadBoard, saveBoard } from './storage';
-
-const SAVE_DEBOUNCE_MS = 500;
 
 export function useLocalStorageSync(): void {
   const hydrate = useBoardStore((s) => s.hydrate);
