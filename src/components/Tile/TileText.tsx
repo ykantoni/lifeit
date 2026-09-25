@@ -32,7 +32,10 @@ export function TileText({ text, onChange, onActivate }: Props) {
         onChange={(e) => setDraft(e.target.value)}
         onBlur={commit}
         onPointerDown={(e) => e.stopPropagation()}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => {
+          e.stopPropagation();
+          onActivate();
+        }}
         onKeyDown={(e) => {
           if (e.key === 'Escape') {
             setDraft(text);

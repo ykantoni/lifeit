@@ -85,11 +85,37 @@ body {
   border: 1px solid var(--color-accent);
 }
 
-.file-sync-conflict-title {
+.modal-title {
   font-size: 17px;
   font-weight: 600;
   margin: 0;
   flex: 1;
+}
+
+.settings-row {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.settings-amount-input {
+  width: 90px;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: inherit;
+  font: inherit;
+}
+
+.settings-unit-select {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: inherit;
+  font: inherit;
 }
 
 .add-tile-button {
@@ -157,6 +183,11 @@ body {
   box-shadow: 0 0 0 3px var(--color-accent-soft);
 }
 
+.tile--xs .tile-text {
+  font-size: 12px;
+  -webkit-line-clamp: 2;
+}
+
 .tile--small .tile-text {
   font-size: 13px;
   -webkit-line-clamp: 3;
@@ -168,13 +199,28 @@ body {
 }
 
 .tile--large .tile-text {
-  font-size: 16px;
-  -webkit-line-clamp: 9;
+  font-size: 15px;
+  -webkit-line-clamp: 7;
 }
 
 .tile--xlarge .tile-text {
+  font-size: 17px;
+  -webkit-line-clamp: 9;
+}
+
+.tile--xxlarge .tile-text {
   font-size: 19px;
-  -webkit-line-clamp: 14;
+  -webkit-line-clamp: 12;
+}
+
+.tile--xxxlarge .tile-text {
+  font-size: 21px;
+  -webkit-line-clamp: 15;
+}
+
+.tile--giant .tile-text {
+  font-size: 24px;
+  -webkit-line-clamp: 19;
 }
 
 .tile-controls {

@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 
-const TICK_MS = 60_000;
-
-/** Shared clock tick so score-driven tiers can be recomputed periodically without per-tile timers. */
-export function useScoreClock(): number {
+/** Ticks `now` at the given interval so score-driven tiers get recomputed periodically. */
+export function useScoreClock(intervalMs: number): number {
   const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
-    const interval = setInterval(() => setNow(Date.now()), TICK_MS);
+    const interval = setInterval(() => setNow(Date.now()), intervalMs);
     return () => clearInterval(interval);
-  }, []);
+  }, [intervalMs]);
 
   return now;
 }

@@ -83,7 +83,7 @@ export function FileSyncControl({ api }: Props) {
       {pendingConflict && (
         <Modal onClose={cancelConflict}>
           <div className="group-modal-header">
-            <h2 className="file-sync-conflict-title">{fileName} already has data</h2>
+            <h2 className="modal-title">{fileName} already has data</h2>
             <IconButton label="Close" onClick={cancelConflict}>
               ✕
             </IconButton>

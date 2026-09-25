@@ -1,4 +1,12 @@
-export type SizeTier = 'small' | 'medium' | 'large' | 'xlarge';
+export type SizeTier =
+  | 'xs'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xlarge'
+  | 'xxlarge'
+  | 'xxxlarge'
+  | 'giant';
 
 interface BaseItem {
   id: string;

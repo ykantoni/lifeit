@@ -1,12 +1,25 @@
 import type { SizeTier } from '../types/tile';
 
-export const SIZE_TIERS: SizeTier[] = ['small', 'medium', 'large', 'xlarge'];
+export const SIZE_TIERS: SizeTier[] = [
+  'xs',
+  'small',
+  'medium',
+  'large',
+  'xlarge',
+  'xxlarge',
+  'xxxlarge',
+  'giant',
+];
 
 const SPANS: Record<SizeTier, { col: number; row: number }> = {
-  small: { col: 1, row: 1 },
-  medium: { col: 2, row: 1 },
-  large: { col: 2, row: 2 },
-  xlarge: { col: 3, row: 2 },
+  xs: { col: 1, row: 1 },
+  small: { col: 2, row: 1 },
+  medium: { col: 2, row: 2 },
+  large: { col: 3, row: 2 },
+  xlarge: { col: 3, row: 3 },
+  xxlarge: { col: 4, row: 3 },
+  xxxlarge: { col: 4, row: 4 },
+  giant: { col: 5, row: 4 },
 };
 
 export function tierSpan(tier: SizeTier): { col: number; row: number } {
